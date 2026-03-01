@@ -39,7 +39,7 @@ print_boot_results <- function(boot_obj, label, conf_level = 0.95) {
 #' @param group1 Vector of dataset in group 1 (log scale)
 #' @param group2 Vector of dataset in group 2 (log scale)
 #' @param n_perm number of permitations
-#' @return List of 
+#' @return List of observed differents, p_value, permutation differents
 #' @export
 run_permutation_test <- function(group1, group2, n_perm = 9999) {
   
@@ -76,4 +76,19 @@ run_permutation_test <- function(group1, group2, n_perm = 9999) {
   
   # Return result
   return(list(observed_diff = obs_diff, p_value = p_value, perm_dist = perm_diffs))
+}
+
+#' Calculate Percentile Bootstrap Confidence Interval
+#' @param data Vector of data points.
+#' @param R Number of bootstrap replicates.
+#' @param is_log Boolean, TRUE if data is already log-transformed.
+#' @return vector of results
+#' @export
+calculate_percentile_ci <- function(data, R = 2000) {
+  # We only need the mean for the percentile method
+  boot_out <- boot::boot(data, function(d, i) mean(d[i]), R = R)
+  # Type "perc" refers to the Percentile Method
+  ci <- boot::boot.ci(boot_out, type = "perc")
+  # Return only the lower and upper bounds [index 4 and 5]
+  return(ci$perc[4:5])
 }
