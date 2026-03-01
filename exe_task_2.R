@@ -47,3 +47,19 @@ hist(perm_results$perm_dist,
 abline(v = perm_results$observed_diff, col = "red", lwd = 2, lty = 2)
 legend("topright", legend = "Observed difference", col = "red", lty = 2, lwd = 2)
 
+# Method 1: Log-transform -> Percentile CI -> Exponential
+# We calculate the CI on the log-scale first
+# Then we use exp() to bring the boundaries back to days
+breast_log_data <- log(data$survival[data$disease == 2])
+ci_log_then_exp <- calculate_percentile_ci(breast_log_data, R = 2000)
+final_ci_method1 <- exp(ci_log_then_exp)
+
+# Method 2: Raw scale -> Percentile CI
+# We calculate the CI directly on the original data
+breast_raw_data <- data$survival[data$disease == 2]
+final_ci_method2 <- calculate_percentile_ci(breast_raw_data, R = 2000)
+
+# Display comparison
+cat("COMPARISON OF 95% PERCENTILE CI (BREAST CANCER)\n")
+cat(sprintf("Method 1: [%.2f, %.2f] \n", final_ci_method1[1], final_ci_method1[2]))
+cat(sprintf("Method 2: [%.2f, %.2f] \n", final_ci_method2[1], final_ci_method2[2]))
