@@ -1,3 +1,5 @@
+source(here::here('scripts/task_3.R'))
+
 # Simulate Bootstrap for the Mean of a Cauchy Distribution
 # Set seed, sample size, number of bootstrap replicates, Cauchy distribution parameters
 seed <- set.seed(123)
@@ -13,7 +15,7 @@ original_data <- rcauchy(n, location = loc, scale = sc)
 # Compute the observed sample mean
 observed_mean <- mean(original_data)
 
-# Compute boostrap for the mean of Cauchy distribution
+# Compute bootstrap for the mean of Cauchy distribution
 boot_means <- bootstrap_mean_cauchy(seed, n, n_boot, loc, sc)
 
 # Visualization to show the failure
