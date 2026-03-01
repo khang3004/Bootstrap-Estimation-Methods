@@ -5,7 +5,8 @@
 #' @param n_boot Number of bootstrap replicates
 #' @param loc Location parameter for Cauchy (default 0)
 #' @param sc Scale parameter for Cauchy (default 1)
-#' 
+#' @return boot_sample: vector of results
+#' @export
 bootstrap_mean_cauchy <- function(seed, n = 100, n_boot = 2000, loc = 0, sc = 1) {
   # Set seed for reproducibility of the simulation
   set.seed(seed)
@@ -37,6 +38,8 @@ bootstrap_mean_cauchy <- function(seed, n = 100, n_boot = 2000, loc = 0, sc = 1)
 #' @param n: Sample size
 #' @param n_boot: Number of bootstrap replicates
 #' @param theta: The true upper bound of the Uniform distribution
+#' @return boot_maxes: Vector of results
+#' @export
 #' 
 boostrap_max_uniform <- function(seed, n, n_boot, theta) {
   # Set seed for reproducibility of the simulation
